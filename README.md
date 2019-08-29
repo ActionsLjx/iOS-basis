@@ -72,14 +72,22 @@ for i in 0...arr.count - 1 {
 * sqlite 数据库存储: 大型数据,有分类顺序需要查询的数据存储. 
 
 ### 10. 造成内存泄漏的原因有什么
-* 最常见的就是循环引用造成内存泄漏
 * 在xib中控件与.m /.h文件的引用关系未取消 但是控件已经移除的时候.
+* 代理在一般情况下，需要使用weak修饰。如果你这个VC需要外部传某个delegate进来，通过delegate+protocol的方式传参数给其他对象，那么这个delegate一定不要强引用，尽量使用weak修饰，否则你的VC会持续持有这个delegate，直到代理自身被释放。
+* ViewController中Block
+* ViewController中存在NSTimer
 * more ... 
 
 ### 11. 造成程序Crash的可能性有哪些
-* 短时间内内存暴涨
-* 内存泄漏
-* 加载了不存在的地址
+1. 短时间内内存暴涨
+2. 内存泄漏 
+3. setObjectForKey key不能为nil，object不能为nil 
+4. setValueForKey key不能为nil，value可以为nil 
+5. dic [key] = value; 键不能为无，值可以为无
+6. 数组超出范围
+7. 日期格式化不正确
+8. 索引超出范围
+9. kvo  志愿没有移除监听，或者国际志愿者组织注册多次监听,移除移除的关键和注册的关键不一致，或者移除多次,确保注册一次要移除一次，不要重复注册，不要重复移除
 
 ### 12. include,import,@class三者区别
 * include是C中用来引用文件的关键字
@@ -136,6 +144,27 @@ static Singleton * _instance = nil;
 }
 
 ```
+### 21. 斐波那契数列(1、1、2、3、5、8、13、21...) 计算第500位  
+
+```
+swift 
+var f1 = 1
+var f2 = 1
+var c = 1 
+for i in 3...500 {
+    c = f2 
+    f2 = f1 + f2
+    f1 = f2
+}
+print(f2)
+```
+
+### 22. 为什么微信要自己写浏览器内核而不用WKWebview.
+
+### 23. swift 与 oc 有什么区别
+* oc 是面向对象编程
+* swift是面向协议编程
+* (rxswift是响应式编程)
 
 
 
