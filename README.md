@@ -166,6 +166,30 @@ print(f2)
 * swift是面向协议编程
 * (rxswift是响应式编程)
 
+### 24. NSString 何时用Strong 何时用Copy
+使用Strong实际上只是引用计数+1,对象只拷贝内存地址
+Copy是深度拷贝
+如果要求str跟着mStr变化，那么就用retain;如果str不能跟着mStr一起变化，那就用copy。而对于要把NSString类型的字符串赋值给str，那两都没啥区别。不会影响安全性，内存管理也一样。
+例:
+
+```
+//OC
+
+    @property (nonatomic, strong) NSString *name;
+
+    @property (nonatomic, strong) NSString *name;
+
+    self.name = mStr;
+    NSLog(@"使用strong第一次得到的名字：%@", self.name);
+    [mStr appendString:@"丰"];
+    NSLog(@"使用strong第二次得到的名字：%@", self.name);
+```
+
+### .25 __unsafe_unretained 的理解和使用
+
+__unsafe_unretained和__weak一样，表示的是对象的一种弱引用关系，唯一的区别是：__weak修饰的对象被释放后，指向对象的指针会置空，也就是指向nil,不会产生野指针；而__unsafe_unretained修饰的对象被释放后，指针不会置空，而是变成一个野指针，那么此时如果访问这个对象的话，程序就会Crash，抛出BAD_ACCESS的异常。
+__weak对性能会有一定的消耗，使用__weak,需要检查对象是否被释放，在追踪是否被释放的时候当然需要追踪一些信息，那么此时__unsafe_unretained比__weak快，而且一个对象有大量的__weak引用对象的时候，当对象被废弃，那么此时就要遍历weak表，把表里所有的指针置空，消耗cpu资源。
+
 
 
 
