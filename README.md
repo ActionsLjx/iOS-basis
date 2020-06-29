@@ -190,6 +190,12 @@ Copy是深度拷贝
 __unsafe_unretained和__weak一样，表示的是对象的一种弱引用关系，唯一的区别是：__weak修饰的对象被释放后，指向对象的指针会置空，也就是指向nil,不会产生野指针；而__unsafe_unretained修饰的对象被释放后，指针不会置空，而是变成一个野指针，那么此时如果访问这个对象的话，程序就会Crash，抛出BAD_ACCESS的异常。
 __weak对性能会有一定的消耗，使用__weak,需要检查对象是否被释放，在追踪是否被释放的时候当然需要追踪一些信息，那么此时__unsafe_unretained比__weak快，而且一个对象有大量的__weak引用对象的时候，当对象被废弃，那么此时就要遍历weak表，把表里所有的指针置空，消耗cpu资源。
 
+### .26 Podfile中的use_frameworks!
+（1）swift项目cocoapods 默认use_frameworks!
+（2）OC项目cocoapods 默认 #use_frameworks!
+
+   用cocoapods导入swift框架到swift项目和OC项目都必须要use_frameworks!
+   使用dynamic frameworks，必须要在Podfile文件中添加use_frameworks!
 
 
 
